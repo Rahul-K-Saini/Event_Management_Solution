@@ -9,6 +9,9 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
+			backgroundImage: {
+				'registrationBGImg': "url('/login-bg.avif')"
+			},
 			fontFamily: {
 				inter: ["var(--font-inter)"],
 				roboto: ["var(--font-roboto-mono)"],

@@ -1,10 +1,7 @@
 export function ImageSection() {
   return (
     <div
-      className="hidden lg:flex lg:w-1/2 bg-cover bg-center"
-      style={{
-        backgroundImage: "url(/login-bg.avif)",
-      }}
+      className="hidden lg:flex lg:w-1/2 bg-cover bg-center bg-registrationBGImg"
     >
       <div className="flex items-center justify-center w-full h-full bg-black bg-opacity-50">
         <div className="text-center">

@@ -12,12 +12,47 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { signup } from "./actions";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [state, signup_action, pending] = useActionState(signup, undefined);
-  console.log(state);
+  const { toast } = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleSuccess = () => {
+      toast({
+        title: "Success!",
+        description: "Your account has been created successfully.",
+        variant: "default",
+        duration: 3000,
+      });
+      const timeout = setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+      return () => clearTimeout(timeout);
+    };
+  
+    const handleError = () => {
+      toast({
+        title: "Error",
+        description: state?.errors?._form,
+        variant: "destructive",
+        duration: 5000,
+      });
+    };
+  
+    if (state?.success) {
+      handleSuccess();
+    }
+    else if (state?.errors?._form) {
+      handleError();
+    }
+  }, [state,router,toast]);
+
   return (
     <Card>
       <CardHeader>
@@ -35,6 +70,11 @@ export default function SignupForm() {
               placeholder="John Singh"
               required
             />
+            {state?.errors?.name?.map((error, index) => (
+              <p key={index} className="text-red-500 text-sm">
+                {error}
+              </p>
+            ))}
           </div>
 
           <div className="space-y-2">
@@ -46,6 +86,11 @@ export default function SignupForm() {
               placeholder="john@example.com"
               required
             />
+            {state?.errors?.email?.map((error, index) => (
+              <p key={index} className="text-red-500 text-sm">
+                {error}
+              </p>
+            ))}
           </div>
           <div className="space-y-2">
             <Label htmlFor="phone">Phone</Label>
@@ -53,9 +98,14 @@ export default function SignupForm() {
               name="phone"
               id="phone"
               type="phone"
-              placeholder="+91 8484848484"
+              placeholder="1234567890"
               required
             />
+            {state?.errors?.phone?.map((error, index) => (
+              <p key={index} className="text-red-500 text-sm">
+                {error}
+              </p>
+            ))}
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
@@ -66,6 +116,11 @@ export default function SignupForm() {
               placeholder="••••••••"
               required
             />
+            {state?.errors?.password?.map((error, index) => (
+              <p key={index} className="text-red-500 text-sm">
+                {error}
+              </p>
+            ))}
           </div>
 
           <Button
