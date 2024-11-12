@@ -1,6 +1,8 @@
 import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import { cache } from "react";
+import { redirect } from "next/navigation";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
@@ -44,3 +46,15 @@ export async function decrypt(session: string | undefined = "") {
         console.log(error)
     }
 }
+
+
+export const verifySession = cache(async () => {
+    const cookie = (await cookies()).get('session')?.value
+    const session = await decrypt(cookie)
+
+    if (!session?.userId) {
+        redirect('/login')
+    }
+
+    return { isAuth: true, userId: session.userId }
+})

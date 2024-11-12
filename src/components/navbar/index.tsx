@@ -1,14 +1,29 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme/theme-toggle";
 import navLinks from "@/data/navlinks";
+import { getUser, logoutUser } from "@/lib/dal";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await getUser();
+        setLoggedInUser(user);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +33,16 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      setLoggedInUser(null);
+      router.push("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -63,23 +88,36 @@ const Navbar = () => {
 
           <div className="flex items-center space-x-4">
             <ModeToggle />
-            <Button
-              asChild
-              className="hidden md:inline-flex bg-blue-500 hover:bg-blue-600 text-white"
-            >
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button
-              asChild
-              className="hidden md:inline-flex bg-blue-500 hover:bg-blue-600 text-white"
-            >
-              <Link href="/join-as-company">Join as Company</Link>
-            </Button>
+
+            {loggedInUser ? (
+              <Button
+                onClick={handleLogout}
+                className="hidden md:inline-flex bg-red-500 hover:bg-red-600 text-white"
+              >
+                Logout
+              </Button>
+            ) : (
+              <>
+                <Button
+                  asChild
+                  className="hidden md:inline-flex bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button
+                  asChild
+                  className="hidden md:inline-flex bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  <Link href="/join-as-company">Join as Company</Link>
+                </Button>
+              </>
+            )}
             <Button
               variant="ghost"
               size="icon"
               className="md:hidden"
               onClick={toggleMenu}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMenuOpen ? (
                 <svg
@@ -135,20 +173,31 @@ const Navbar = () => {
                 {label}
               </Link>
             ))}
-            <Link
-              href="/login"
-              className="block px-3 py-2 rounded-md text-base font-medium text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-700"
-              onClick={toggleMenu}
-            >
-              Login
-            </Link>
-            <Link
-              href="/login"
-              className="block px-3 py-2 rounded-md text-base font-medium text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-700"
-              onClick={toggleMenu}
-            >
-              Join as Company
-            </Link>
+            {loggedInUser ? (
+              <button
+                onClick={handleLogout}
+                className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-700 dark:text-red-300 hover:text-red-900 dark:hover:text-white hover:bg-red-50 dark:hover:bg-red-700"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-700"
+                  onClick={toggleMenu}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/join-as-company"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-700"
+                  onClick={toggleMenu}
+                >
+                  Join as Company
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
