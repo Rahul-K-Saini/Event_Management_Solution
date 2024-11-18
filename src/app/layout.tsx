@@ -1,8 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
 import { Inter, Roboto_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -45,9 +43,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Toaster />
-          <Navbar />
           {children}
-          <Footer />
         </ThemeProvider>
       </body>
     </html>
