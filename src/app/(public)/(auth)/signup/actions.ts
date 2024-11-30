@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import pool from "@/lib/db";
 import bcrypt from "bcryptjs";
 
+
 const signupSchema = z.object({
     name: z.string()
         .trim()

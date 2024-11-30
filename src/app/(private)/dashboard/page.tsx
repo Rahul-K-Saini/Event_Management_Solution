@@ -1,8 +1,8 @@
 import { getUser } from "@/lib/dal";
 import { user } from "@/types/user";
 import { redirect } from "next/navigation";
-import { UserDashboard } from "../_components/userDashboard";
-import { CompanyDashboard } from "../_components/companyDashboard";
+import { UserDashboard } from "./_components/userDashboard";
+import { CompanyDashboard } from "./_components/companyDashboard";
 
 export default async function DashBoard() {
   const user: user = await getUser();

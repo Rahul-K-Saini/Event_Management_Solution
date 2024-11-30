@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Calendar, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Sidebar,
   SidebarContent,
@@ -21,10 +22,76 @@ import {
   SidebarMenuSubItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { UserItems } from "@/types/sidebar-items";
+import { getUser } from "@/lib/dal";
+import { user } from "@/types/user";
+import { logout } from "@/app/(public)/(auth)/login/actions";
+import {
+  userItems,
+  companyItems,
+} from "@/app/(private)/dashboard/_components/sidebar-items";
 
-export function UserSidebar({ items }: { items: UserItems[] }) {
+export function UserSidebar() {
+  const [user, setUser] = React.useState<user | null>(null);
+  const [loading, setLoading] = React.useState(false);
   const pathname = usePathname();
+
+  React.useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    setLoading(true);
+    const res = await getUser();
+    setLoading(false);
+    setUser(res);
+  };
+
+  const items =
+    user?.role === "company"
+      ? companyItems
+      : user?.role === "user"
+      ? userItems
+      : [];
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
+  if (loading) {
+    return (
+      <Sidebar className="border-r">
+        <SidebarHeader className="border-b px-4 py-2">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-6 w-6" />
+            <Skeleton className="h-6 w-32" />
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Menu</SidebarGroupLabel>
+            <SidebarGroupContent>
+              {[1, 2, 3, 4].map((item) => (
+                <div key={item} className="my-2">
+                  <Skeleton className="h-8 w-full" />
+                </div>
+              ))}
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter className="border-t p-4">
+          <div className="flex items-center gap-4">
+            <Skeleton className="h-10 w-10 rounded-full" />
+            <div className="flex flex-col gap-2 flex-grow">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-3 w-32" />
+            </div>
+            <Skeleton className="h-8 w-8" />
+          </div>
+        </SidebarFooter>
+      </Sidebar>
+    );
+  }
+
   return (
     <>
       <Sidebar className="border-r">
@@ -76,7 +143,7 @@ export function UserSidebar({ items }: { items: UserItems[] }) {
                     </Link>
                   )}
                 </SidebarMenu>
-              ))}{" "}
+              ))}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
@@ -87,15 +154,22 @@ export function UserSidebar({ items }: { items: UserItems[] }) {
                 src="/placeholder.svg?height=32&width=32"
                 alt="User"
               />
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarFallback>
+                {user?.name?.at(0)?.toUpperCase()}
+              </AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="text-sm font-medium">John Doe</span>
+              <span className="text-sm font-medium">{user?.name}</span>
               <span className="text-xs text-muted-foreground">
-                john@example.com
+                {user?.email}
               </span>
             </div>
-            <Button variant="ghost" size="icon" className="ml-auto">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-auto"
+              onClick={handleLogout}
+            >
               <LogOut className="h-4 w-4" />
               <span className="sr-only">Log out</span>
             </Button>

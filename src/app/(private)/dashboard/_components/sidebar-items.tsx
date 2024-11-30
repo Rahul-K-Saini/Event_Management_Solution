@@ -86,8 +86,8 @@ export const companyItems: UserItems[] = [
     title: "Events",
     submenu: [
       { 
-        title: "All Events",
-        url: "/events",
+        title: "Create Event",
+        url: "/add-event",
         icon: (
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -97,16 +97,19 @@ export const companyItems: UserItems[] = [
           </svg>
         )
       },
+
+
       { 
-        title: "Create Event",
-        url: "/events/create",
+        title: "Manage Events",
+        url: "/events",
         icon: (
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
         )
-      },
+
+      }
     ],
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -139,4 +142,5 @@ export const companyItems: UserItems[] = [
       </svg>
     )
   },
+
 ];

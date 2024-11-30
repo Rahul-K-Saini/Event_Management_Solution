@@ -28,11 +28,11 @@ export default function SignupForm() {
         title: "Success!",
         description: "Your account has been created successfully.",
         variant: "default",
-        duration: 3000,
+        duration: 2000,
       });
       const timeout = setTimeout(() => {
         router.push("/login");
-      }, 2000);
+      }, 1000);
       return () => clearTimeout(timeout);
     };
   

@@ -3,9 +3,11 @@
 import { deleteSession, verifySession } from "./sessions";
 import { cache } from "react"
 import pool from "./db";
+import {redirect} from "next/navigation"
 
 export const logoutUser = async () => {
     await deleteSession();
+    redirect("/");
 }
 
 export const getUser = cache(async () => {
