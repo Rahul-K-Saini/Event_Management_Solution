@@ -1,65 +1,97 @@
 import { cn } from "@/lib/utils";
 import {
-  Settings,
-  Cloud,
-  DollarSign,
   Move,
-  Heart,
+  CheckSquare,
+  BarChart,
   HelpCircle,
   Route,
   Terminal,
+  Lock,
+  Layers,
+  Mail,
+  Bell,
+  UserPlus,
+  Calendar
 } from "lucide-react";
 
 export function FeaturesSectionDemo() {
   const features = [
     {
-      title: "Built for developers",
+      title: "Event Creation & Management",
       description:
-        "Built for engineers, developers, dreamers, thinkers and doers.",
+        "Companies can easily create and manage events with all necessary tools in one place.",
+      icon: <Calendar />,
+    },
+    {
+      title: "User Registration System",
+      description:
+        "Allow users to quickly register for events with a seamless and intuitive process.",
+      icon: <UserPlus />,
+    },
+    {
+      title: "Real-Time Notifications",
+      description:
+        "Keep attendees updated with instant notifications for registrations, updates, and reminders.",
+      icon: <Bell />,
+    },
+    {
+      title: "Automated Emails",
+      description:
+        "Effortless email integration ensures users are informed about event details and changes.",
+      icon: <Mail />,
+    },
+    {
+      title: "Multi-Tenant Support",
+      description:
+        "Enable companies to manage their own events without interference on a shared platform.",
+      icon: <Layers />,
+    },
+    {
+      title: "Modern Tech Stack",
+      description:
+        "Built with Next.js 15, Bun, server actions, and the latest technologies for speed and scalability.",
       icon: <Terminal />,
     },
     {
-      title: "Ease of use",
+      title: "User-Friendly Interface",
       description:
-        "It's as easy as using an Apple, and as expensive as buying one.",
+        "An intuitive and fast UI ensures ease of use for companies and event attendees.",
       icon: <Move />,
     },
     {
-      title: "Pricing like no other",
+      title: "Scalable Architecture",
       description:
-        "Our prices are best in the market. No cap, no lock, no credit card required.",
-      icon: <DollarSign />,
-    },
-    {
-      title: "100% Uptime guarantee",
-      description: "We just cannot be taken down by anyone.",
-      icon: <Cloud />,
-    },
-    {
-      title: "Multi-tenant Architecture",
-      description: "You can simply share passwords instead of buying new seats",
+        "Optimized for handling high traffic and large-scale events effortlessly.",
       icon: <Route />,
     },
-    {
-      title: "24/7 Customer Support",
+{
+      title: "Attendance Management",
       description:
-        "We are available a 100% of the time. Atleast our AI Agents are.",
+        "Easily track attendee participation and manage check-ins with robust tools.",
+      icon: <CheckSquare />,
+    },
+    {
+      title: "Analytics & Insights",
+      description:
+        "Track registrations, attendance, and engagement with powerful analytics dashboards.",
+      icon: <BarChart />,
+    },
+    {
+      title: "Secure and Reliable",
+      description:
+        "Your data is protected with robust security measures, ensuring 100% uptime.",
+      icon: <Lock />,
+    },
+    {
+      title: "24/7 Support",
+      description:
+        "Dedicated support is always available to assist companies and users.",
       icon: <HelpCircle />,
     },
-    {
-      title: "Money back guarantee",
-      description:
-        "If you donot like EveryAI, we will convince you to like us.",
-      icon: <Settings />,
-    },
-    {
-      title: "And everything else",
-      description: "I just ran out of copy ideas. Accept my sincere apologies",
-      icon: <Heart />,
-    },
   ];
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  relative z-10 py-10 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  relative z-10 pb-10 px-2 max-w-8xl mx-auto">
       {features.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}
@@ -106,4 +138,4 @@ const Feature = ({
       </p>
     </div>
   );
-};
+}
