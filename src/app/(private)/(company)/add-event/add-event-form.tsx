@@ -1,21 +1,21 @@
-"use client"
+"use client";
+import Image from "next/image";
+import * as React from "react";
+import { Calendar } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
-import * as React from "react"
-import { Calendar } from 'lucide-react'
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-
-import { createEvent } from "./actions"
-import { Button } from "@/components/ui/button"
+import { createEvent } from "./actions";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -24,17 +24,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/hooks/use-toast"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
@@ -42,13 +42,13 @@ const formSchema = z.object({
   event_date: z.string().min(1, "Event date is required"),
   location: z.string().min(1, "Location is required").max(255),
   status: z.enum(["DRAFT", "PUBLISHED", "CANCELLED"]),
-})
+});
 
 export function CreateEventForm() {
-  const [isPending, startTransition] = React.useTransition()
-  const [image, setImage] = React.useState<File | null>(null)
-  const { toast } = useToast()
-  const router = useRouter()
+  const [isPending, startTransition] = React.useTransition();
+  const [image, setImage] = React.useState<File | null>(null);
+  const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,33 +59,33 @@ export function CreateEventForm() {
       location: "",
       status: "DRAFT",
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
-      const formData = new FormData()
+      const formData = new FormData();
       Object.entries(values).forEach(([key, value]) => {
-        formData.append(key, value)
-      })
+        formData.append(key, value);
+      });
       if (image) {
-        formData.append("image", image)
+        formData.append("image", image);
       }
 
-      const result = await createEvent(formData)
+      const result = await createEvent(formData);
       if (result.success) {
         toast({
           title: "Success",
           description: "Event created successfully",
-        })
-        router.push("/events")
+        });
+        router.push("/events");
       } else {
         toast({
           variant: "destructive",
           title: "Error",
           description: result.error,
-        })
+        });
       }
-    })
+    });
   }
 
   return (
@@ -155,7 +155,10 @@ export function CreateEventForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Status</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select status" />
@@ -203,14 +206,16 @@ export function CreateEventForm() {
                             type="file"
                             accept="image/*"
                             onChange={(e) => {
-                              const file = e.target.files?.[0]
-                              if (file) setImage(file)
+                              const file = e.target.files?.[0];
+                              if (file) setImage(file);
                             }}
                             className="cursor-pointer"
                           />
                           {image && (
                             <div className="relative aspect-video rounded-lg border border-border bg-muted">
-                              <img
+                              <Image
+                                width={1000}
+                                height={1000}
                                 src={URL.createObjectURL(image)}
                                 alt="Preview"
                                 className="rounded-lg object-cover"
@@ -220,7 +225,8 @@ export function CreateEventForm() {
                         </div>
                       </FormControl>
                       <FormDescription>
-                        Upload an image for your event. Recommended size: 1200x630px
+                        Upload an image for your event. Recommended size:
+                        1200x630px
                       </FormDescription>
                     </FormItem>
                   )}
@@ -244,6 +250,5 @@ export function CreateEventForm() {
         </Form>
       </CardContent>
     </Card>
-  )
+  );
 }
-

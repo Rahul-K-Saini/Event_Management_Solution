@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Inter, Roboto_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default function RootLayout({
         >
           <Toaster />
           {children}
+          <Analytics/>
         </ThemeProvider>
       </body>
     </html>
