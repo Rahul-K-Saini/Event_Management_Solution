@@ -42,7 +42,7 @@ export default function RootLayout({
           This project is going through some new changes. Please visit{" "}
           <Link
             className="text-blue-950"
-            href="https://github.com/Rahul-K-Saini/Event_Management_Solution for more information"
+            href="https://github.com/Rahul-K-Saini/Event_Management_Solution"
           >
             here
           </Link>{" "}
