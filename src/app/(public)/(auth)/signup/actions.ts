@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import { v4 as uuid } from "uuid";
-import pool from "@/lib/db";
+import pool from "@/utils/db";
 import bcrypt from "bcryptjs";
 
 

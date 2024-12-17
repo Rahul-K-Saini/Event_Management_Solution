@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { createSession, deleteSession } from "@/lib/sessions";
 import { redirect } from "next/navigation";
-import pool from "@/lib/db";
+import pool from "@/utils/db";
 import bcrypt from "bcryptjs"
 
 const loginSchema = z.object({

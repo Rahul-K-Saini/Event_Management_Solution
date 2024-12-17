@@ -13,7 +13,7 @@ export async function createSession(userId: string) {
   console.log(expiresAt)
   try {
     const session = await encrypt({ userId, expiresAt });
-    console.log('Generated Session Token:', session); // Log the generated token
+    console.log('Generated Session Token:', session); 
     (await cookies()).set("session", session, {
       httpOnly: true,
       secure: true,
