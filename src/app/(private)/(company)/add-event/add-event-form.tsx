@@ -2,10 +2,6 @@
 import Image from "next/image";
 import * as React from "react";
 import { Calendar } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
 import { createEvent } from "./actions";
 import { Button } from "@/components/ui/button";
@@ -36,13 +32,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
-const formSchema = z.object({
-  title: z.string().min(1, "Title is required").max(255),
-  description: z.string().min(1, "Description is required"),
-  event_date: z.string().min(1, "Event date is required"),
-  location: z.string().min(1, "Location is required").max(255),
-  status: z.enum(["DRAFT", "PUBLISHED", "CANCELLED"]),
-});
 
 export function CreateEventForm() {
   const [isPending, startTransition] = React.useTransition();
