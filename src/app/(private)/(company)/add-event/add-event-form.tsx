@@ -17,11 +17,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from './uploadImage';
 
 export const CreateEventForm = () => {
-
   return (
-    <Card className="w-full max-w-7xl mx-auto">
+    <Card className="w-[1200px] mx-auto">
       <CardHeader>
         <CardTitle>Create New Event</CardTitle>
         <CardDescription>Fill in the details below to create a new event.</CardDescription>
@@ -77,17 +77,7 @@ export const CreateEventForm = () => {
           </form>
 
           <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium block mb-2">Event Image</label>
-              <Input
-                type="file"
-                className="cursor-pointer"
-                accept="image/*"
-              />
-            </div>
-            {/* <div className="mt-4 border rounded-lg p-4 bg-muted"> */}
-            {/*   <p className="text-sm">Selected file: {file.name}</p> */}
-            {/* </div> */}
+            <ImageUpload />
           </div>
         </div>
       </CardContent>

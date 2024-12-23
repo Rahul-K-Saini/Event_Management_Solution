@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${robotoMono.variable} scroll-smooth font-sans antialiased`}
+      className={`${inter.variable} ${robotoMono.variable} font-sans antialiased`}
     >
       <body className="font-roboto">
         <div className="bg-gradient-to-r from-violet-500 to-violet-700 text-gray-50 text-center">
