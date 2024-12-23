@@ -4,14 +4,18 @@ import { cn } from "@/lib/utils";
 import { DotPattern } from "@/components/ui/dot-pattern";
 import { BlurInDemo, WordPullUpDemo } from "./text";
 import { RainbowButton } from "@/components/ui/rainbow-button";
+import { GitStarButton } from "../ui/gitstarbutton";
 
 export default function DotPatternLinearGradient() {
   return (
-    <div className="relative h-[calc(100vh-100px)] flex size-full  overflow-hidden bg-background sm:p-28 p-8 ">
+    <div className="relative h-[calc(100vh-100px)] flex flex-col items-center justify-center size-full  overflow-hidden bg-background sm:p-28 p-8 ">
+      <div>
+        <GitStarButton />
+      </div>
       <p className="z-10 whitespace-pre-wrap text-center text-5xl font-medium tracking-tighter text-black dark:text-white">
         <WordPullUpDemo />
         <BlurInDemo />
-      <RainbowButton className="md:text-2xl text-sm sm:mt-20 mt-16 tracking-normal">Get Started</RainbowButton>
+        <RainbowButton className="md:text-2xl text-sm sm:mt-20 mt-16 tracking-normal">Get Started</RainbowButton>
       </p>
       <DotPattern
         width={20}
