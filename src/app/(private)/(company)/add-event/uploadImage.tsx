@@ -1,9 +1,19 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 export function ImageUpload() {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+    }
+  };
 
   return (
     <div>
@@ -13,12 +23,18 @@ export function ImageUpload() {
         type="file"
         className="hidden"
         accept="image/*"
+        onChange={handleFileChange}
+        name="image"
       />
       <div
         onClick={() => inputRef.current?.click()}
-        className="h-[500px] cursor-pointer border-dashed border-4 flex justify-center items-center w-full bg-gray-600"
+        className="h-[420px] cursor-pointer border-dashed border-4 flex justify-center items-center w-full "
       >
-        <p className="text-white">Upload Image</p>
+        {imageUrl ? (
+          <Image src={imageUrl} alt="upload_image" width={500} height={500} objectFit="contain" />
+        ) : (
+          <p>Upload Image</p>
+        )}
       </div>
     </div>
   );
