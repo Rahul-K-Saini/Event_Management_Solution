@@ -17,22 +17,46 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ImageUpload } from './uploadImage';
+import { ImageUpload } from "./uploadImage";
 import { useActionState } from "react";
+import { useEffect } from "react";
 import { createEvent } from "./actions";
+import { toast } from "@/hooks/use-toast";
+
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const CreateEventForm = () => {
   const [state, createEventAction, isPending] = useActionState(createEvent, {
-    sucess: false,
-    errors: null
+    success: false,
+    data: null,
+    errors: null,
   });
+
+  useEffect(() => {
+    if (state.success) {
+      toast({
+        title: "Success",
+        description: "Event created successfully.",
+        variant: "default",
+      });
+    }
+  }, [state.success]);
+
   return (
     <Card className="md:w-[1200px] w-[90%] mx-auto">
       <CardHeader>
         <CardTitle>Create New Event</CardTitle>
-        <CardDescription>Fill in the details below to create a new event.</CardDescription>
+        <CardDescription>
+          Fill in the details below to create a new event.
+        </CardDescription>
       </CardHeader>
       <CardContent>
+        {state.errors && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{state.errors}</AlertDescription>
+          </Alert>
+        )}
         <form action={createEventAction} encType="multipart/form-data">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -79,7 +103,10 @@ export const CreateEventForm = () => {
           </div>
           <div className="flex justify-end gap-4 mt-6">
             <Button variant="outline">Cancel</Button>
-            <Button type="submit" className="" disabled={isPending}>{isPending && <Loader2 className="animate-spin" />}Create Event</Button>
+            <Button type="submit" className="" disabled={isPending}>
+              {isPending && <Loader2 className="animate-spin mr-2" />}
+              Create Event
+            </Button>
           </div>
         </form>
       </CardContent>

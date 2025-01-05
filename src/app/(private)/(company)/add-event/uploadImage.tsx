@@ -31,7 +31,7 @@ export function ImageUpload() {
         className="h-[420px] cursor-pointer border-dashed border-4 flex justify-center items-center w-full "
       >
         {imageUrl ? (
-          <Image src={imageUrl} alt="upload_image" width={500} height={500} objectFit="contain" />
+          <Image src={imageUrl} className="w-full h-full object-contain" alt="upload_image" width={500} height={500} objectFit="contain" />
         ) : (
           <p>Upload Image</p>
         )}

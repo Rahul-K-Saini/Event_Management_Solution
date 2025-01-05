@@ -13,7 +13,6 @@ const Navbar = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const router = useRouter();
 
-  console.log(loggedInUser)
   useEffect(() => {
     const fetchUser = async () => {
       try {
